@@ -28,3 +28,11 @@ npm i vant -S
 npm i babel-plugin-import -D
 
 
+
+# easy Mock
+www.easy-mock.com
+
+
+# axios 
+
+npm install axios --save
