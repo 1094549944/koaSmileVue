@@ -36,3 +36,6 @@ www.easy-mock.com
 # axios 
 
 npm install axios --save
+
+# vue-awesome-swiper 
+ 萝卜兔

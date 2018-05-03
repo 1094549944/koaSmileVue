@@ -14,6 +14,7 @@
         </van-col>
       </van-row>
     </div>
+    <!--轮播图-->
     <div class="swiper-area">
       <van-swipe :autoplay="1000">
         <van-swipe-item v-for="(banner,index) in bannerPicArray" :key="index">
@@ -21,28 +22,52 @@
         </van-swipe-item>
       </van-swipe>
     </div>
+    <!--小图标-->
     <div class="type-bar">
       <div v-for="(cate,index) in category" :key="index">
         <img v-lazy="cate.image" width="90%" />
         <span>{{cate.mallCategoryName}}</span>
       </div>
     </div>
-    <!--AD banner area-->
+    <!--广告位-->
     <div class="ad-banner">
       <img v-lazy="adBanner.PICTURE_ADDRESS" width="100%">
+    </div>
+    <!--商品推荐-->
+    <div class="recommend-area">
+      <div class="recommend-title">
+        商品推荐
+      </div>
+      <div class="recommend-body">
+        <swiper :options="swiperOption">
+          <swiper-slide v-for="(item ,index) in recommendGoods" :key="index">
+            <div class="recommend-item">
+              <img src="item.image" alt="" srcset="" width=“80%” />
+              <div>{{item.goodsName}}</div>
+              <div>￥{{item.price}}(￥{{item.mallPrice}})</div>
+            </div>
+          </swiper-slide>
+        </swiper>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   import axios from "axios";
+  import 'swiper/dist/css/swiper.css'
+  import {
+    swiper,
+    swiperSlide
+  } from 'vue-awesome-swiper'
   export default {
     data() {
       return {
         locationIcon: require("../../assets/images/location.png"),
         bannerPicArray: [],
         category: [],
-        adBanner: []
+        adBanner: [],
+        recommendGoods: []
       };
     },
   
@@ -52,11 +77,12 @@
           method: 'get',
         })
         .then(response => {
-          console.log(response)
+  
           if (response.status == 200) {
-            this.category = response.data.data.category
+            this.category = response.data.data.category //小图标导航
             this.adBanner = response.data.data.advertesPicture //获得广告图片
-            this.bannerPicArray = response.data.data.slides
+            this.bannerPicArray = response.data.data.slides // 轮播图
+            this.recommendGoods = response.data.data.recommend
           }
         })
         .catch((error) => {})
@@ -112,6 +138,29 @@
     padding: .3rem;
     font-size: 12px;
     text-align: center;
+  }
+  
+  .recommend-area {
+    background-color: #fff;
+    margin-top: .3rem;
+  }
+  
+  .recommend-title {
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    padding: .2rem;
+    color: #e5017d;
+  }
+
+  .recommend-body{
+       border-bottom: 1px solid #eee;
+   }
+ 
+  .recommend-item{
+      width:99%;
+      border-right: 1px solid #eee;
+      font-size: 12px;
+      text-align: center;
   }
 </style>
 
