@@ -52,6 +52,7 @@
         </div>
         <!--swiper示例-->
         <swiperDefault></swiperDefault>
+        <swiperText></swiperText>
     </div>
 </template>
 
@@ -63,6 +64,7 @@
         swiperSlide
     } from 'vue-awesome-swiper'
     import swiperDefault from '../swiper/swiperDefault'
+     import swiperText from '../swiper/swiperText'
     export default {
         data() {
             return {
@@ -80,7 +82,8 @@
         components: {
             swiper,
             swiperSlide,
-            swiperDefault
+            swiperDefault,
+            swiperText
         },
         created() {
             axios({

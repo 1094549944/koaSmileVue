@@ -21,10 +21,11 @@
             return {
                 slide: [1, 2, 3, 4, 5, 6],
                 swiperOption: {
+                    loop:true,
                     pagination: {
                         el: '.swiper-pagination',
-                        type: 'fraction',
-                        
+                        //type: 'fraction',
+                        clickable:true
                     },
                     
                 
