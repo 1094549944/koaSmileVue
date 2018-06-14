@@ -39,14 +39,27 @@
                             <img :src="item.image"
                                  width="80%">
                             <div>{{item.goodsName}}</div>
-                            <div>￥{{item.price}}(￥{{item.mallPrice}})</div>
+                            <div>￥{{item.price|moneyFilter}}(￥{{item.mallPrice|moneyFilter}})</div>
                         </div>
                     </swiper-slide>
                 </swiper>
             </div>
         </div>
         <!--楼层-->
-        <floor-component :floorData="floor1"></floor-component>
+        <floor-component :floorData="floor1"
+                         :floorTitle="floorName.floor1"></floor-component>
+        <floor-component :floorData="floor2"
+                         :floorTitle="floorName.floor2"></floor-component>
+        <floor-component :floorData="floor3"
+                         :floorTitle="floorName.floor3"></floor-component>
+        <!--热卖组件-->
+        <div class="hot-area">
+            <div class="hot-title">热卖商品</div>
+            <div class="hot-goods">
+                <!--这里是一个list组件-->
+
+            </div>
+        </div>
     </div>
 </template>
 
@@ -55,6 +68,7 @@ import axios from 'axios'
 import 'swiper/dist/css/swiper.css'
 import SearchHeader from 'common/searchHeader/searchHeader'
 import FloorComponent from '../component/floorComponent'
+import { toMoney } from '@/filter/moneyFilter'
 import {
     swiper,
     swiperSlide
@@ -70,8 +84,16 @@ export default {
             category: [],
             adBanner: '',
             recommendGoods: [],
-            floor1: []
+            floor1: [],
+            floor2: [],
+            floor3: [],
+            floorName: []
 
+        }
+    },
+    filters: {
+        moneyFilter (money) {
+            return toMoney(money)
         }
     },
     components: {
@@ -93,6 +115,9 @@ export default {
                     this.bannerPicArray = data.slides;
                     this.recommendGoods = data.recommend;
                     this.floor1 = data.floor1
+                    this.floor2 = data.floor2
+                    this.floor3 = data.floor3
+                    this.floorName = data.floorName
 
                 }
             })
@@ -148,5 +173,11 @@ export default {
   border-right: 1px solid #eee;
   font-size: 12px;
   text-align: center;
+}
+.hot-area {
+  text-align: center;
+  font-size: 14px;
+  height: 1.8rem;
+  line-height: 1.8rem;
 }
 </style>

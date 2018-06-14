@@ -39,10 +39,12 @@ npm install axios --save
 
 # vue-awesome-swiper 
 
- 轮播图
+ ##轮播图
 
  npm install vue-awesome-swiper  --save
 
- 
+# 技术胖源码地址
+
+ https://github.com/shenghy/SmileVue
 
 
