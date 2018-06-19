@@ -57,7 +57,17 @@
             <div class="hot-title">热卖商品</div>
             <div class="hot-goods">
                 <!--这里是一个list组件-->
-
+                <van-list>
+                    <van-row gutter="20">
+                        <van-col span="12"
+                                 v-for="item of hotGoods"
+                                 :key="item.goodsId">
+                            <goods-info :goodsImg="item.image"
+                                        :goodsName="item.name"
+                                        :goodsPrice="item.price"></goods-info>
+                        </van-col>
+                    </van-row>
+                </van-list>
             </div>
         </div>
     </div>
@@ -69,6 +79,7 @@ import 'swiper/dist/css/swiper.css'
 import SearchHeader from 'common/searchHeader/searchHeader'
 import FloorComponent from '../component/floorComponent'
 import { toMoney } from '@/filter/moneyFilter'
+import goodsInfo from '../component/goodsInfoComponent'
 import {
     swiper,
     swiperSlide
@@ -87,7 +98,8 @@ export default {
             floor1: [],
             floor2: [],
             floor3: [],
-            floorName: []
+            floorName: [],
+            hotGoods: []//热卖商品
 
         }
     },
@@ -100,7 +112,8 @@ export default {
         swiper,
         swiperSlide,
         SearchHeader,
-        FloorComponent
+        FloorComponent,
+        goodsInfo
     },
     created () {
         axios({
@@ -118,7 +131,7 @@ export default {
                     this.floor2 = data.floor2
                     this.floor3 = data.floor3
                     this.floorName = data.floorName
-
+                    this.hotGoods = data.hotGoods
                 }
             })
             .catch(error => {
