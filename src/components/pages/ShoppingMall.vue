@@ -80,6 +80,7 @@ import SearchHeader from 'common/searchHeader/searchHeader'
 import FloorComponent from '../component/floorComponent'
 import { toMoney } from '@/filter/moneyFilter'
 import goodsInfo from '../component/goodsInfoComponent'
+import url from '@/serviceAPI.config.js'
 import {
     swiper,
     swiperSlide
@@ -117,7 +118,7 @@ export default {
     },
     created () {
         axios({
-            url: 'https://www.easy-mock.com/mock/5ae993753ecdf019c288e529/smileVue/index',
+            url: url.getShopingMallInfo,
             method: 'get',
         })
             .then(res => {
