@@ -41,3 +41,32 @@ brew services stop mongodb
 ##  使用mongoose 来解决node 和 mongodb 数据通讯的数据建模库
 
 ## 安装mongoose  npm install mongoose --save
+
+
+# mongoose 的schema
+
+## 
+schema :用来定义表的模板，实现和MongoDb数据库的映射,不具备表的操作能力
+model: 具备表操作能力的一个集合，是mongoose的核心能力,有表的操作能力
+entity: 类似记录，由model创建的实体，有表的操作能力
+
+
+##加密处理：md5 和哈希256算法
+
+www.atool.org/hash.php 哈希加密算法
+
+
+即使加密也不是很安全，暴力破解，则可以破解出来。
+
+##加盐处理：防止暴力破解
+
+
+# bcrypt 用来加盐处理。
+
+
+# service目录下
+ npm install --save bcrypt
+
+ 如果安装失败，则使用npm install --save bcrypt --registry=https://registry.npm.taobao.org
+
+ 

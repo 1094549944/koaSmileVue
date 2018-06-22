@@ -3,7 +3,13 @@ const mongo = 'mongoose';
 const mongoose = require('mongoose')
 const db = 'mongodb://localhost/smile-db'
 
-
+//引入glob和schema  如果版本过低，需要全局安装使用glob npm install blob --save
+const glob = require('glob')
+const { resolve } = require('path')
+//引入所有的schema
+exports.initSchemas = () => {
+  glob.sync(resolve(__dirname, './schema/', '**/*.js')).forEach(require)
+}
 
 exports.connect = () => {
   //连接数据库
