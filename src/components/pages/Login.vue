@@ -44,6 +44,12 @@ export default {
       passwordErrorMsg: '',  //当密码出现错误时的提示信息
     }
   },
+  created () {
+    if (localStorage.userInfo) {
+      Toast.success('您已经登录过了')
+      this.$router.push('/')
+    }
+  },
   methods: {
     goBack () {
       this.$router.go(-1)
