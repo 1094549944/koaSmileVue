@@ -70,3 +70,15 @@ www.atool.org/hash.php 哈希加密算法
  如果安装失败，则使用npm install --save bcrypt --registry=https://registry.npm.taobao.org
 
  
+# 安装koa-router
+
+npm install koa-router --save
+
+# koa 中间件 用来接收post数据
+npm install --save koa-bodyparser
+
+
+# koa 中间件，解决跨域
+
+npm install --save koa2-cors
+
