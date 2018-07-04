@@ -62,9 +62,10 @@
                         <van-col span="12"
                                  v-for="item of hotGoods"
                                  :key="item.goodsId">
-                            <goods-info :goodsImg="item.image"
+                            <goods-info :goodsImage="item.image"
                                         :goodsName="item.name"
-                                        :goodsPrice="item.price"></goods-info>
+                                        :goodsPrice="item.price"
+                                        :goodsId="item.goodsId"></goods-info>
                         </van-col>
                     </van-row>
                 </van-list>

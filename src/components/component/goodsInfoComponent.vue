@@ -12,13 +12,15 @@
 <script>
 import { toMoney } from '@/filter/moneyFilter.js'
 export default {
-  name: 'goodsInfo',
   props: ['goodsImage', 'goodsName', 'goodsPrice'],
   filters: {
     moneyFilter (money) {
       return toMoney(money)
     }
   },
+  created () {
+    console.log(this.goodsImage)
+  }
 }
 </script>
 

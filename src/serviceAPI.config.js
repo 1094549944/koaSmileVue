@@ -9,7 +9,9 @@ const URL = {
   //用户注册接口
   registerUser: LOCALURL + 'user/register',
   //用户登录接口
-  login: LOCALURL + 'user/login'
+  login: LOCALURL + 'user/login',
+  //获取商品详情
+  getDetailGoodsInfo: LOCALURL + 'goods/getDetailGoodsInfo'
 
 }
 
