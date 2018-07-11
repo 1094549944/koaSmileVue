@@ -145,54 +145,27 @@ export default {
 </script>
 
 <style scoped>
-.swiper-area {
-  clear: both;
-  max-height: 15rem;
-  overflow: hidden;
-}
-
-.type-bar {
+.goods-name {
   background-color: #fff;
-  margin: 0 0.3rem 0.3rem 0.3rem;
-  border-radius: 0.3rem;
-  font-size: 14px;
+}
+.goods-price {
+  background-color: #fff;
+}
+.detail {
+  font-size: 0px;
+}
+.goods-bottom {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  background-color: #fff;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-flow: nowrap;
 }
-
-.type-bar div {
-  padding: 0.3rem;
-  font-size: 12px;
-  text-align: center;
-}
-
-.recommend-area {
-  background-color: #fff;
-  margin-top: 0.3rem;
-}
-
-.recommend-title {
-  border-bottom: 1px solid #eee;
-  font-size: 14px;
-  padding: 0.2rem;
-  color: #e5017d;
-}
-
-.recommend-body {
-  border-bottom: 1px solid #eee;
-}
-
-.recommend-item {
-  width: 99%;
-  border-right: 1px solid #eee;
-  font-size: 12px;
-  text-align: center;
-}
-.hot-area {
-  text-align: center;
-  font-size: 14px;
-  height: 1.8rem;
-  line-height: 1.8rem;
+.goods-bottom > div {
+  flex: 1;
+  padding: 5px;
 }
 </style>
