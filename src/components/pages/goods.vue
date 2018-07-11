@@ -47,7 +47,6 @@ import url from '@/serviceAPI.config.js'
 import { Toast } from 'vant'
 import { toMoney } from '@/filter/moneyFilter.js'
 export default {
-  name: 'Goods',
   data () {
     return {
       goodsId: '',
