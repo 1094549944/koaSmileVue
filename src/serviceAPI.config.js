@@ -11,8 +11,13 @@ const URL = {
   //用户登录接口
   login: LOCALURL + 'user/login',
   //获取商品详情
-  getDetailGoodsInfo: LOCALURL + 'goods/getDetailGoodsInfo'
-
+  getDetailGoodsInfo: LOCALURL + 'goods/getDetailGoodsInfo',
+  //得到大类信息
+  getCategoryList: LOCALURL + 'goods/getCategoryList',
+  //得到小类别信息
+  getCategorySubList: LOCALURL + 'goods/getCategorySubList',
+  //根据商品类别获取商品列表
+  getGoodsListByCategorySubID: LOCALURL + 'goods/getGoodsListByCategorySubID'
 }
 
 module.exports = URL
