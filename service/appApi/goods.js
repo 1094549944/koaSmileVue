@@ -4,7 +4,7 @@
  * @Author: jiaxinying 
  * @Date: 2018-07-03 18:13:15 
  * @Last Modified by: jiaxinying
- * @Last Modified time: 2018-07-04 10:56:30
+ * @Last Modified time: 2018-07-16 11:27:09
  * 批量插入
  */
 const Router = require('koa-router')
@@ -102,6 +102,41 @@ router.post('/getDetailGoodsInfo', async (ctx) => {
 
 // })
 
+//读取大类别的API制作
+router.get('/getCategoryList', async (ctx) => {
+  try {
+    const Category = mongoose.model('Category')
+    let result = await Category.find().exec()
+    ctx.body = { code: 200, message: result }
+  } catch (err) {
+    ctx.body = { code: 200, message: err }
+  }
+})
+
+//读取小类别的API制作
+
+router.get('/getCategorySubList', async (ctx) => {
+  try {
+    let categoryId = 1
+    const CategorySub = mongoose.model('CategorySub')
+    let result = await CategorySub.find({ MALL_CATEGORY_ID: categoryId }).exec()
+    ctx.body = { code: 200, message: result }
+  } catch (err) {
+    ctx.body = { code: 500, message: err }
+  }
+})
+
+//根据商品类别获取商品列表
+router.get('/getGoodsListByCategorySubID', async (ctx) => {
+  try {
+    let categorySubId = '2c9f6c946016ea9b016016f79c8e0000'
+    const Goods = mongoose.model('Goods')
+    let result = await Goods.find({ SUB_ID: categorySubId }).exec()
+    ctx.body = { code: 200, message: result }
+  } catch (err) {
+    ctx.body = { code: 500, message: err }
+  }
+})
 
 
 module.exports = router
