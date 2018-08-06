@@ -4,7 +4,7 @@
  * @Author: jiaxinying 
  * @Date: 2018-07-03 18:13:15 
  * @Last Modified by: jiaxinying
- * @Last Modified time: 2018-07-18 11:44:57
+ * @Last Modified time: 2018-08-06 15:48:37
  * 批量插入
  */
 const Router = require('koa-router')
@@ -129,13 +129,19 @@ router.post('/getCategorySubList', async (ctx) => {
 //根据商品类别获取商品列表
 router.post('/getGoodsListByCategorySubID', async (ctx) => {
   try {
-    let categorySubId = ctx.request.body.categorySubId
+    let categorySubId = ctx.request.body.categorySubId  //子类别ID
+    let page = ctx.request.body.page  //当前页数
+    let num = 10  //每页显示数量
+    let start = (page - 1) * num  //开始位置
+
     const Goods = mongoose.model('Goods')
-    let result = await Goods.find({ SUB_ID: categorySubId }).exec()
+    let result = await Goods.find({ SUB_ID: categorySubId })
+      .skip(start).limit(num).exec()
     ctx.body = { code: 200, message: result }
-  } catch (err) {
-    ctx.body = { code: 500, message: err }
+  } catch (error) {
+    ctx.body = { code: 500, message: error }
   }
+
 })
 
 

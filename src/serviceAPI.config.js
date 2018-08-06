@@ -16,8 +16,9 @@ const URL = {
   getCategoryList: LOCALURL + 'goods/getCategoryList',
   //得到小类别信息
   getCategorySubList: LOCALURL + 'goods/getCategorySubList',
-  //根据商品类别获取商品列表
+  //根据商品类别获取商品列表（得到小类商品信息）
   getGoodsListByCategorySubID: LOCALURL + 'goods/getGoodsListByCategorySubID'
+
 }
 
 module.exports = URL

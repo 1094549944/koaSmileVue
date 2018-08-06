@@ -24,7 +24,8 @@
           <div class="tabCategorySub">
             <van-tabs v-model="active"
                       sticky
-                      swipeable>
+                      swipeable
+                      @click="onClickCategorySub">
               <van-tab v-for="(item,index) in categorySub"
                        :key="index"
                        :title="item.MALL_SUB_NAME">
@@ -40,9 +41,18 @@
                         :finished="finished"
                         @load="onLoad">
                 <div class="list-item"
-                     v-for="item in list"
-                     :key="item">
-                  {{item}}
+                     @click="goGoodsInfo(item.ID)"
+                     v-for="(item,index) in goodList"
+                     :key="index">
+                  <div class="list-item-img">
+                    <img :src="item.IMAGE1"
+                         width="100%" />
+
+                  </div>
+                  <div class="list-item-text">
+                    <div>{{item.NAME}}</div>
+                    <div>￥{{item.ORI_PRICE | moneyFilter}}</div>
+                  </div>
                 </div>
               </van-list>
             </van-pull-refresh>
@@ -56,7 +66,8 @@
 <script>
 import axios from 'axios'
 import url from '@/serviceAPI.config.js'
-import { Toast } from 'vant';
+import { Toast } from 'vant'
+import { toMoney } from '@/filter/moneyFilter.js'
 export default {
   name: 'CategoryList',
   components: {
@@ -70,9 +81,17 @@ export default {
       active: 0,    //激活标签的值
       loading: false,
       finished: false, //上拉加载是否有数据
-      list: [], //商品数据 
+      // list: [], //商品数据 （模拟用）
       isRefresh: false, //下拉刷新
+      page: 1,//商品列表页数
+      goodList: [],//商品数据列表
+      categorySubId: ''//商品子类ID
 
+    }
+  },
+  filters: {
+    moneyFilter (money) {
+      return toMoney(money)
     }
   },
   methods: {
@@ -97,6 +116,9 @@ export default {
     //一级，二级分类点击
     clickCategory (index, categoryId) {
       this.categoryIndex = index
+      this.page = 1
+      this.finished = false
+      this.goodList = []
       this.getCategorySubByCategoryId(categoryId)
     },
     //获取二级分类
@@ -111,62 +133,68 @@ export default {
         if (res.data.code == 200 && res.data.message) {
           this.categorySub = res.data.message
           this.active = 0
-          this.getGoodsListByCategorySubID(this.categorySub[0].ID)
+          this.categorySubId = this.categorySub[0].ID
+          this.onLoad()
         } else {
+
           Toast('服务器错误，获取数据失败')
         }
       }).catch(err => {
         console.log(err)
       })
     },
-    //获取商品列表
-    getGoodsListByCategorySubID (categorySubId) {
-      axios({
-        url: url.getGoodsListByCategorySubID,
-        method: 'post',
-        data: {
-          categorySubId: categorySubId
-        }
-      }).then(res => {
 
-        if (res.data.code == 200 && res.data.message) {
-
-          this.goodsList = res.data.message
-
-        } else {
-          Toast('服务器错误，获取数据失败')
-        }
-      }).catch(err => {
-        console.log(err)
-      })
-
-    },
-    //二级点击，商品列表改变
-    getClickSub (item) {
-      let id = this.categorySub[item].ID
-      this.getGoodsListByCategorySubID(id)
-    },
     //上拉加载方法
     onLoad () {
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-        this.loading = false
 
-        if (this.list.length >= 100) {
-          this.finished = true
-        }
-      }, 500)
+      setTimeout(() => {
+        this.categorySubId = this.categorySubId ? this.categorySubId : this.categorySub[0].ID
+        this.getGoodList()
+      }, 500);
+
     },
     //下拉刷新方法
     onRefresh () {
       setTimeout(() => {
         this.isRefresh = false;
         this.finished = false;
-        this.list = []
+        this.goodList = []
         this.onLoad()
       }, 500)
+    },
+    //获取子类的列表
+    getGoodList () {
+      axios({
+        url: url.getGoodsListByCategorySubID,
+        method: 'post',
+        data: {
+          categorySubId: this.categorySubId,
+          page: this.page
+        }
+      })
+        .then(response => {
+          console.log('获取数据列表', response)
+          if (response.data.code == 200 && response.data.message.length) {
+            this.page++
+            this.goodList = this.goodList.concat(response.data.message)
+          } else {
+            this.finished = true
+          }
+          this.loading = false;
+
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    //点击子类的方法
+    onClickCategorySub (index, title) {
+
+      this.categorySubId = this.categorySubId[index].ID
+      this.goodList = []
+      this.finished = false
+      this.page = 1
+      this.onLoad()
     }
   },
   created () {
@@ -196,12 +224,22 @@ export default {
   background-color: #fff;
 }
 .list-item {
-  text-align: center;
-  line-height: 80px;
+  display: flex;
+  flex-direction: row;
+  font-size: 0.8rem;
   border-bottom: 1px solid #f0f0f0;
   background-color: #fff;
+  padding: 5px;
 }
 #list-div {
   overflow: scroll;
+}
+.list-item-img {
+  flex: 8;
+}
+.list-item-text {
+  flex: 16;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 </style>
