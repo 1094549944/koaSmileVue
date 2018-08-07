@@ -200,6 +200,7 @@ export default {
   created () {
     this.getCategory()
 
+
   },
   mounted () {
     let winHeight = document.documentElement.clientHeight
