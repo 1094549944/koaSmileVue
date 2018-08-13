@@ -31,11 +31,13 @@
     <div class="goods-bottom">
       <div>
         <van-button size="large"
-                    type="primary">加入购物车</van-button>
+                    type="primary"
+                    @click="addGoodsToCart">加入购物车</van-button>
       </div>
       <div>
         <van-button size="large"
                     type="danger">直接购买</van-button>
+
       </div>
     </div>
 
@@ -78,7 +80,7 @@ export default {
           } else {
             Toast('服务器错误，数据获取失败')
           }
-          console.log(this.goodsInfo)
+
         })
         .catch(error => {
           console.log(error)
@@ -86,6 +88,30 @@ export default {
     },
     onClickLeft () {
       this.$router.go(-1)
+    },
+    //增加商品到购物车
+    addGoodsToCart () {
+      //取出本地购物车中的商品
+      //localStorage.removeItem('cartInfo')
+      let cartInfo = localStorage.cartInfo ? JSON.parse(localStorage.cartInfo) : []
+      let isHaveGoods = cartInfo.find(cart => cart.goodsId == this.goodsId)
+
+      if (!isHaveGoods) {
+        let newGoodsInfo = {
+          goodsId: this.goodsInfo.ID,
+          name: this.goodsInfo.NAME,
+          price: this.goodsInfo.PRESENT_PRICE,
+          image: this.goodsInfo.IMAGE1,
+          count: 1
+        }
+        cartInfo.push(newGoodsInfo)
+        localStorage.cartInfo = JSON.stringify(cartInfo)
+        Toast.success('添加成功')
+        this.$router.push({ name: 'Cart' })
+      } else {
+        Toast.success('已有此商品')
+      }
+
     }
   },
 }

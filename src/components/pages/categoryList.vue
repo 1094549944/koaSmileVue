@@ -46,7 +46,8 @@
                      :key="index">
                   <div class="list-item-img">
                     <img :src="item.IMAGE1"
-                         width="100%" />
+                         width="100%"
+                         :onerror="errorImg" />
 
                   </div>
                   <div class="list-item-text">
@@ -85,8 +86,8 @@ export default {
       isRefresh: false, //下拉刷新
       page: 1,//商品列表页数
       goodList: [],//商品数据列表
-      categorySubId: ''//商品子类ID
-
+      categorySubId: '',//商品子类ID
+      errorImg: 'this.src="' + require('@/assets/images/errorimg.png') + '"'
     }
   },
   filters: {
@@ -195,6 +196,9 @@ export default {
       this.finished = false
       this.page = 1
       this.onLoad()
+    },
+    goGoodsInfo (id) {
+      this.$router.push({ name: 'Goods', params: { goodsId: id } })
     }
   },
   created () {
@@ -204,8 +208,8 @@ export default {
   },
   mounted () {
     let winHeight = document.documentElement.clientHeight
-    document.getElementById('leftNav').style.height = winHeight - 46 + 'px'
-    document.getElementById("list-div").style.height = winHeight - 90 + 'px'
+    document.getElementById('leftNav').style.height = winHeight - 46 - 50 + 'px'
+    document.getElementById("list-div").style.height = winHeight - 90 - 50 + 'px'
   }
 }
 </script>
