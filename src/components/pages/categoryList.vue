@@ -39,7 +39,8 @@
                               @refresh="onRefresh">
               <van-list v-model="loading"
                         :finished="finished"
-                        @load="onLoad">
+                        @load="onLoad"
+                        :immediate-check="false">
                 <div class="list-item"
                      @click="goGoodsInfo(item.ID)"
                      v-for="(item,index) in goodList"
